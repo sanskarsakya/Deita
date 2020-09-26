@@ -23,7 +23,10 @@
     "@ngrx/router-store": "^10.0.0",
     "@ngrx/store": "^10.0.0",
     "@ngrx/store-devtools": "^10.0.0",
+    "echarts": "^4.9.0",
+    "echarts-gl": "^1.1.1",
     "ng-zorro-antd": "^9.3.0",
+    "ngx-echarts": "^5.1.2",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.3"
