@@ -5,7 +5,7 @@
         Chart Type
       </label>
       <select class="custom-select" (change)="onChartTypeChange()" [(ngModel)]="selected_chart_type">
-        <option value="" disabled>Choose chart type</option>
+        <option value="" [ngValue]="null" disabled>Choose chart type</option>
         <option *ngFor="let chart of chart_types" [ngValue]="chart.id">{{chart.name}}</option>
       </select>
     </div>
