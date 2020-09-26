@@ -1,0 +1,19 @@
+<div>
+  <!-- <form [formGroup]="form" (ngSubmit)="onSubmit()" class="bg-white max-w-xl shadow-md rounded px-8 pt-6 pb-8 mb-4"> -->
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="firstname">
+        Chart Type
+      </label>
+      <select class="custom-select" (change)="onChartTypeChange()" [(ngModel)]="selected_chart_type">
+        <option value="" disabled>Choose chart type</option>
+        <option *ngFor="let chart of chart_types" [ngValue]="chart.id">{{chart.name}}</option>
+      </select>
+    </div>
+  <!-- </form> -->
+
+  <app-bar-chart *ngIf="selected_chart_type === 1"></app-bar-chart>
+  <app-line-chart *ngIf="selected_chart_type === 2"></app-line-chart>
+  <app-pie-chart *ngIf="selected_chart_type === 3"></app-pie-chart>
+  <app-scatter-plot *ngIf="selected_chart_type === 4"></app-scatter-plot>
+  <app-scatter-plot-3d *ngIf="selected_chart_type === 5"></app-scatter-plot-3d>
+</div>
