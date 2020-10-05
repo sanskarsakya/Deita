@@ -25,6 +25,8 @@
     "@ngrx/store-devtools": "^10.0.0",
     "echarts": "^4.9.0",
     "echarts-gl": "^1.1.1",
+    "electron-better-ipc": "^1.1.1",
+    "is-electron": "^2.2.0",
     "ng-zorro-antd": "^9.3.0",
     "ngx-echarts": "^5.1.2",
     "rxjs": "~6.5.5",

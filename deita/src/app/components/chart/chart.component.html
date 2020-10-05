@@ -1,0 +1,19 @@
+<div class="my-20 group min-h-custom">
+  <div class="hidden show" >
+    <div class="flex justify-center ">
+      <chart-select [selectedChart]="selectedChart" (onChartChange)="handleChartChange($event)"></chart-select>
+      <dimension-measure-select [chartType]="selectedChart"
+        (onMeasureChange)="handleMeasureChange($event)"
+        (onDimensionChange)="handleDimensionChange($event)"
+        (onSecondDimensionChange)="handleSecondDimensionChange($event)"></dimension-measure-select>
+    </div>
+  </div>
+  <div *ngIf="!selectedChart && !selectedMeasure && !selectedDimension">
+    <p class="text-center font-semibold text-lg"> Select Chart type, dimensions and measures</p>
+
+  </div>
+  <div *ngIf="selectedChart && selectedMeasure && selectedDimension">
+    <div echarts
+      [options]="options"></div>
+  </div>
+</div>

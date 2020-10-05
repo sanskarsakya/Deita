@@ -1,1 +1,26 @@
-<div echarts [options]="options" class="demo-chart"></div>
+<div>
+    <select class="border border-gray-100 text-gray-900"
+        (change)="onSelectChange()"
+        [(ngModel)]="selectedDimension">
+        <option value=""
+            [ngValue]="null"
+            disabled>Select dimension</option>
+        <option *ngFor="let dimension of dimensions$ | async"
+            [ngValue]="dimension">{{dimension}}</option>
+    </select>
+
+    <select class="border border-gray-100 ml-4 text-gray-900"
+        (change)="onSelectChange()"
+        [(ngModel)]="selectedMeasure">
+        <option value=""
+            [ngValue]="null"
+            disabled>Select measure</option>
+        <option *ngFor="let measure of measures$ | async"
+            [ngValue]="measure">{{measure}}</option>
+    </select>
+</div>
+<div echarts
+    [options]="options"
+    class="demo-chart"></div>
+<!-- <pre>{{pie_data$ | async | json}}</pre> -->
+

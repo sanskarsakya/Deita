@@ -1,0 +1,24 @@
+<select class="ml-2 px-2 py-1 border border-gray-500 text-gray-900"
+  (change)="onDimensionSelectChange($event)">
+  <option value=""
+    [ngValue]="">Select dimension</option>
+  <option *ngFor="let dimension of dimensions"
+    [ngValue]="dimension">{{dimension.column_name}}</option>
+</select>
+
+<select class="ml-2 px-2 py-1 border border-gray-500 text-gray-900"
+*ngIf="chartType === 'scatter'"
+  (change)="onSecondDimensionSelectChange($event)">
+  <option value=""
+    [ngValue]="">Select dimension</option>
+  <option *ngFor="let dimension of dimensions"
+    [ngValue]="dimension">{{dimension.column_name}}</option>
+</select>
+
+<select class="ml-2 px-2 py-1 border border-gray-500 text-gray-900"
+  (change)="onMeasureSelectChange($event)">
+  <option value=""
+    [ngValue]="">Select measure</option>
+  <option *ngFor="let measure of measures"
+    [ngValue]="measure">{{measure.column_name}}</option>
+</select>

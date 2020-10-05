@@ -9,11 +9,28 @@ import { SharedModule } from './../../@shared/shared.module';
 // CONTAINERS
 import * as fromContainers from './containers';
 
+// GUARDS
+import * as fromGuards from './guards';
+
+// NG-ZORRO
+import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzPopoverModule } from 'ng-zorro-antd/popover';
+
+// STORE
+import { AppStoreModule } from './../../@store/app-store/app-store.module';
+import { ChartStoreModule } from './../../@store/chart-store/chart-store.module';
+
+
 export const ROUTES: Routes = [] = [
   {
-    path:'',
-    component: fromContainers.LandingComponent
-  }
+    path       : '',
+    // canActivate: [fromGuards.AuthGuard],
+    component  : fromContainers.PlaygroundComponent
+  },
+  {
+    path       : 'login',
+    component  : fromContainers.LoginComponent
+  },
 ]
 @NgModule({
   imports: [
@@ -21,8 +38,17 @@ export const ROUTES: Routes = [] = [
     RouterModule.forChild(ROUTES),
     ReactiveFormsModule,
     FormsModule,
-    SharedModule
+    SharedModule,
+
+    // ng-zorro
+    NzModalModule,
+    NzPopoverModule,
+
+    // store
+    AppStoreModule,
+    ChartStoreModule
   ],
-  declarations: [...fromContainers.containers]
+  declarations: [...fromContainers.containers],
+  providers   : [...fromGuards.guards]
 })
 export class LandingModule { }

@@ -1,0 +1,7 @@
+<select class="px-2 py-1 border border-gray-500 text-gray-900"
+  (change)="onSelectChange($event)">
+  <option value=""
+    [ngValue]="null">Select chart</option>
+  <option *ngFor="let chart of charts"
+    [ngValue]="chart">{{chart}}</option>
+</select>

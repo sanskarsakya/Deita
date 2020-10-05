@@ -1,5 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 
+
+// STORE
+import { Store } from '@ngrx/store';
+import * as fromChartStore from '../../../@store/chart-store';
+
+// RXJS
+import { Observable } from 'rxjs/internal/Observable';
+
 @Component({
   selector: 'app-pie-chart',
   templateUrl: './pie-chart.component.html',
@@ -9,14 +17,54 @@ export class PieChartComponent implements OnInit {
 
   options: any;
 
-  constructor() { }
+  pie_data$: any;
+
+  measures$: Observable<string[]>;
+  dimensions$: Observable<string[]>;
+
+  selectedDimension = null;
+  selectedMeasure = null;
+
+  constructor(
+    private chartStore: Store<fromChartStore.ChartState>,
+  ) { }
 
   ngOnInit() {
     console.log('PieChartComponent: init')
-    this.options = this.option1();
-    // this.options = this.option2();
+
+    // SELECTORS
+    this.dimensions$ = this.chartStore.select(fromChartStore.getDimensions)
+    this.measures$ = this.chartStore.select(fromChartStore.getMeasures)
+    // this.pie_data$ = 
+    // this.chartStore.select(fromChartStore.getAggDataByDimension, {dimension:this.selectedDimension, measure: this.selectedMeasure})
+    // .subscribe(d => {
+    //   // this.options = this.option1();
+    //   this.options = this.option2(d);
+    // });
+
 
   }
+
+  
+  onSelectChange() {
+    console.log(this.selectedDimension)
+    if(this.selectedDimension && this.selectedMeasure){
+      this.chartStore.select(fromChartStore.getAggDataByDimension, {dimension:this.selectedDimension, measure: this.selectedMeasure})
+      .subscribe(s => {
+        console.log(s)
+        this.options = this.option2(s)
+      })
+    }
+  }
+
+  // onMeasureChange() {
+  //   console.log(this.selectedMeasure)
+  //   this.chartStore.select(fromChartStore.getDataByMeasure, { measure: this.selectedMeasure }).subscribe(s => {
+  //     this.measuresData$ = s
+  //     this.options = this.getOptions(this.measuresData$, this.dimensionsData$)
+  //   })
+
+  // }
 
   option1() {
     let data = this.genData(50);
@@ -62,7 +110,7 @@ export class PieChartComponent implements OnInit {
     };
   }
 
-  option2() {
+  option2(data) {
     return {
       backgroundColor: '#2c343c',
 
@@ -90,17 +138,11 @@ export class PieChartComponent implements OnInit {
       },
       series: [
         {
-          name: '访问来源',
+          name: 'days',
           type: 'pie',
           radius: '55%',
           center: ['50%', '50%'],
-          data: [
-            { value: 335, name: '直接访问' },
-            { value: 310, name: '邮件营销' },
-            { value: 274, name: '联盟广告' },
-            { value: 235, name: '视频广告' },
-            { value: 400, name: '搜索引擎' }
-          ].sort(function (a, b) { return a.value - b.value; }),
+          data: data.sort(function (a, b) { return a.value - b.value; }),
           roseType: 'radius',
           label: {
             color: 'rgba(255, 255, 255, 0.3)'

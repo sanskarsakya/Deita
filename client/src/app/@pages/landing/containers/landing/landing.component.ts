@@ -8,7 +8,29 @@ import { FormBuilder, Validators } from '@angular/forms';
 })
 export class LandingComponent implements OnInit {
 
-  selected_chart_type:number = null;
+  test_data = {
+    xAxisData: ['sun', 'mon', 'tue'],
+    data1: [1,3,5],
+
+  }
+
+  data_config = [
+    {
+      id: 1,
+      type: 1,
+      
+    },
+    {
+      id: 2,
+      type: 2,
+    },
+    {
+      id: 3,
+      type: 3,
+    }
+  ]
+
+  selected_chart_type: number = null;
 
   // chart Names
   chart_types: any = [
@@ -52,5 +74,40 @@ export class LandingComponent implements OnInit {
   onSubmit() {
 
   }
+  isVisible
+  showModal(): void {
+    this.isVisible = true;
+  }
+  handleModalClose(): void {
+    console.log('Button cancel clicked!');
+    this.isVisible = false;
+  }
+  // popover setting
+  popoverVisible
+  clickMe(chart_type): void {
+    this.selected_chart_type = chart_type;
+    this.popoverVisible = false;
+    this.isVisible = true;
+  }
+
+  change(value: boolean): void {
+    console.log(value);
+  }
 
 }
+
+
+/***
+ * json
+ * iterate
+ * component type
+ * component data
+ * create chart
+ * open chart into modal
+ * auto save config
+ * chart book
+ * display into chart book
+ * dimensions
+ * measures
+ *
+ */

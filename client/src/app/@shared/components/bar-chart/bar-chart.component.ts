@@ -1,4 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+
+// MODELS
+import { BarChartConfig } from './../../../@core/models/bar-chart.model';
+
+
+// STORE
+import { Store } from '@ngrx/store';
+import * as fromChartStore from '../../../@store/chart-store';
+
+// RXJS
+import { Observable } from 'rxjs/internal/Observable';
 
 @Component({
   selector: 'app-bar-chart',
@@ -8,29 +19,61 @@ import { Component, OnInit } from '@angular/core';
 export class BarChartComponent implements OnInit {
 
   options: any;
+  @Input() editMode: boolean = false;
+  @Input() data: BarChartConfig;
 
-  constructor() {}
+  measures$: Observable<string[]>;
+  dimensions$: Observable<string[]>;
+
+  // dimensionsData$: Observable<number[]>;
+  // measuresData$: Observable<string[]>;
+  dimensionsData$: number[] = [];
+  measuresData$: string[] = [];
+
+  dimensions: any[];
+  selectedDimension = null;
+  selectedMeasure = null;
+
+  constructor(
+    private chartStore: Store<fromChartStore.ChartState>,
+  ) { }
 
   ngOnInit(): void {
     console.log('BarChartComponent: init');
-    const xAxisData = [];
-    const data1 = [];
-    const data2 = [];
 
-    for (let i = 0; i < 100; i++) {
-      xAxisData.push('category' + i);
-      data1.push((Math.sin(i / 5) * (i / 5 - 10) + i / 6) * 5);
-      data2.push((Math.cos(i / 5) * (i / 5 - 10) + i / 6) * 5);
-    }
+    // SELECTORS
+    this.dimensions$ = this.chartStore.select(fromChartStore.getDimensions)
+    this.measures$ = this.chartStore.select(fromChartStore.getMeasures)
 
-    this.options = {
+  }
+
+  onDimensionChange() {
+    console.log(this.selectedDimension)
+    this.chartStore.select(fromChartStore.getDataByDimension, { dimension: this.selectedDimension }).subscribe(s => {
+      this.dimensionsData$ = s
+      this.options = this.getOptions(this.measuresData$, this.dimensionsData$)
+    })
+  }
+
+  onMeasureChange() {
+    console.log(this.selectedMeasure)
+    this.chartStore.select(fromChartStore.getDataByMeasure, { measure: this.selectedMeasure }).subscribe(s => {
+      this.measuresData$ = s
+      this.options = this.getOptions(this.measuresData$, this.dimensionsData$)
+    })
+
+  }
+
+
+  getOptions(measuresData, dimensionsData) {
+    return {
       legend: {
         data: ['bar', 'bar2'],
         align: 'left',
       },
       tooltip: {},
       xAxis: {
-        data: xAxisData,
+        data: measuresData || [],
         silent: false,
         splitLine: {
           show: false,
@@ -39,21 +82,20 @@ export class BarChartComponent implements OnInit {
       yAxis: {},
       series: [
         {
-          name: 'bar',
+          name: 'Category',
           type: 'bar',
-          data: data1,
+          data: dimensionsData || [],
           animationDelay: (idx) => idx * 10,
         },
-        {
-          name: 'bar2',
-          type: 'bar',
-          data: data2,
-          animationDelay: (idx) => idx * 10 + 100,
-        },
+        // {
+        //   name: 'bar2',
+        //   type: 'bar',
+        //   data: data2,
+        //   animationDelay: (idx) => idx * 10 + 100,
+        // },
       ],
       animationEasing: 'elasticOut',
       animationDelayUpdate: (idx) => idx * 5,
     };
   }
-
 }

@@ -1,0 +1,142 @@
+<!-- <div class="max-w-5xl mx-auto">
+  <div class="p-4">
+    <app-bar-chart [editMode]="true"></app-bar-chart>
+  </div>
+</div> -->
+<!-- <app-pie-chart></app-pie-chart> -->
+<div class="mx-auto max-w-5xl p-4">
+  <button class="px-2 py-1 bg-green-500 text-white hover:bg-green-400"
+    (click)="showModal()">New Connection</button>
+  <button class="px-2 py-1 bg-green-500 text-white hover:bg-green-400 ml-4"
+    (click)="loadTable()">Load Table</button>
+</div>
+
+<!-- <div>
+  <pre>{{tables$ | async | json}}</pre>
+  <pre>{{connectDatabase$ | async | json}}</pre>
+</div> -->
+
+<nz-modal [(nzVisible)]="isVisible"
+  nzTitle="Create Connection"
+  (nzOnCancel)="handleCancel()"
+  (nzOnOk)="handleOk()">
+  <form [formGroup]="form">
+    <div class="spacy-y-4">
+
+
+      <!-- start client -->
+      <div class="mb-4">
+        <p class="text-6F7782 text-xs leading-none mb-2">Client</p>
+        <input
+          class="focus:outline-none w-full rounded border border-gray-400 p-2 text-sm text-gray-900 leading-relaxed focus:border-blue-500"
+          formControlName="client"
+          type="text"
+          placeholder="client"
+          [ngClass]="{'border-red-500': f.client.errors && f.client.touched}" />
+        <ng-container>
+          <span *ngIf="f.client.errors && f.client.touched"
+            class="text-xs text-red-500">Client is required.</span>
+        </ng-container>
+      </div>
+      <!-- end client -->
+
+      <!-- start host -->
+      <div class="mb-4">
+        <p class="text-6F7782 text-xs leading-none mb-2">Host</p>
+        <input
+          class="focus:outline-none w-full rounded border border-gray-400 p-2 text-sm text-gray-900 leading-relaxed focus:border-blue-500"
+          formControlName="host"
+          type="text"
+          placeholder="host"
+          [ngClass]="{'border-red-500': f.host.errors && f.host.touched}" />
+        <ng-container>
+          <span *ngIf="f.host.errors && f.host.touched"
+            class="text-xs text-red-500">Host is required.</span>
+        </ng-container>
+      </div>
+      <!-- end host -->
+
+      <!-- start port -->
+      <div class="mb-4">
+        <p class="text-6F7782 text-xs leading-none mb-2">Port</p>
+        <input
+          class="focus:outline-none w-full rounded border border-gray-400 p-2 text-sm text-gray-900 leading-relaxed focus:border-blue-500"
+          formControlName="port"
+          type="text"
+          placeholder="port"
+          [ngClass]="{'border-red-500': f.port.errors && f.port.touched}" />
+        <ng-container>
+          <span *ngIf="f.port.errors && f.port.touched"
+            class="text-xs text-red-500">Port is required.</span>
+        </ng-container>
+      </div>
+      <!-- end port -->
+
+      <!-- start user -->
+      <div class="mb-4">
+        <p class="text-6F7782 text-xs leading-none mb-2">User</p>
+        <input
+          class="focus:outline-none w-full rounded border border-gray-400 p-2 text-sm text-gray-900 leading-relaxed focus:border-blue-500"
+          formControlName="user"
+          type="text"
+          placeholder="user"
+          [ngClass]="{'border-red-500': f.user.errors && f.user.touched}" />
+        <ng-container>
+          <span *ngIf="f.user.errors && f.user.touched"
+            class="text-xs text-red-500">User is required.</span>
+        </ng-container>
+      </div>
+      <!-- end user -->
+
+      <!-- start password -->
+      <div class="mb-4">
+        <p class="text-6F7782 text-xs leading-none mb-2">Password</p>
+        <input
+          class="focus:outline-none w-full rounded border border-gray-400 p-2 text-sm text-gray-900 leading-relaxed focus:border-blue-500"
+          formControlName="password"
+          type="password"
+          placeholder="password"
+          [ngClass]="{'border-red-500': f.password.errors && f.password.touched}" />
+        <ng-container>
+          <span *ngIf="f.password.errors && f.password.touched"
+            class="text-xs text-red-500">Password is required.</span>
+        </ng-container>
+      </div>
+      <!-- end password -->
+
+
+      <!-- start database -->
+      <div class="mb-4">
+        <p class="text-6F7782 text-xs leading-none mb-2">Database</p>
+        <input
+          class="focus:outline-none w-full rounded border border-gray-400 p-2 text-sm text-gray-900 leading-relaxed focus:border-blue-500"
+          formControlName="database"
+          type="text"
+          placeholder="database"
+          [ngClass]="{'border-red-500': f.database.errors && f.database.touched}" />
+        <ng-container>
+          <span *ngIf="f.database.errors && f.database.touched"
+            class="text-xs text-red-500">Database is required.</span>
+        </ng-container>
+      </div>
+      <!-- end database -->
+
+
+      <div *nzModalFooter>
+        <button id="btnMovieCreate"
+          type="button"
+          class="bg-blue-500 px-2 py-1 rounded text-xs text-white mt-4"
+          (click)="connect(form)">
+          Connect
+        </button>
+      </div>
+    </div>
+
+
+
+
+  </form>
+</nz-modal>
+
+<!-- py-20 -->
+<!-- <loading></loading> -->

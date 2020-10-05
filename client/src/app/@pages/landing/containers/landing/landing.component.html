@@ -1,19 +1,63 @@
-<div>
-  <!-- <form [formGroup]="form" (ngSubmit)="onSubmit()" class="bg-white max-w-xl shadow-md rounded px-8 pt-6 pb-8 mb-4"> -->
-    <div class="mb-4">
-      <label class="block text-gray-700 text-sm font-bold mb-2" for="firstname">
-        Chart Type
-      </label>
-      <select class="custom-select" (change)="onChartTypeChange()" [(ngModel)]="selected_chart_type">
-        <option value="" [ngValue]="null" disabled>Choose chart type</option>
-        <option *ngFor="let chart of chart_types" [ngValue]="chart.id">{{chart.name}}</option>
-      </select>
-    </div>
-  <!-- </form> -->
+<!-- <div>
+  <div class="mb-4">
+    <label class="block text-gray-700 text-sm font-bold mb-2"
+      for="firstname">
+      Chart Type
+    </label>
+    <select class="custom-select"
+      (change)="onChartTypeChange()"
+      [(ngModel)]="selected_chart_type">
+      <option value=""
+        [ngValue]="null"
+        disabled>Choose chart type</option>
+      <option *ngFor="let chart of chart_types"
+        [ngValue]="chart.id">{{chart.name}}</option>
+    </select>
+  </div>
 
   <app-bar-chart *ngIf="selected_chart_type === 1"></app-bar-chart>
   <app-line-chart *ngIf="selected_chart_type === 2"></app-line-chart>
   <app-pie-chart *ngIf="selected_chart_type === 3"></app-pie-chart>
   <app-scatter-plot *ngIf="selected_chart_type === 4"></app-scatter-plot>
   <app-scatter-plot-3d *ngIf="selected_chart_type === 5"></app-scatter-plot-3d>
+</div> -->
+
+<div *ngFor="let config of data_config">
+  <app-bar-chart *ngIf="config.type === 1"></app-bar-chart>
+  <app-line-chart *ngIf="config.type === 2"></app-line-chart>
+  <app-pie-chart *ngIf="config.type === 3"></app-pie-chart>
+  <app-scatter-plot *ngIf="config.type === 4"></app-scatter-plot>
+  <app-scatter-plot-3d *ngIf="config.type === 5"></app-scatter-plot-3d>
 </div>
+
+<div class="w-full flex justify-center">
+  <button class="px-2 py-1 bg-green-500 hover:bg-green-600 rounded-md shadow text-white"
+    nz-popover
+    nzPopoverTitle="Select Chart Type"
+    [(nzPopoverVisible)]="popoverVisible"
+    (nzPopoverVisibleChange)="change($event)"
+    nzPopoverTrigger="click"
+    [nzPopoverContent]="contentTemplate">Create Chart</button>
+</div>
+
+<nz-modal [(nzVisible)]="isVisible"
+  [nzStyle]="{ width: '90vw', height: '90vh', top: '20px' }"
+  (nzOnCancel)="handleModalClose()"
+  nzTitle="Create Chart">
+  <app-bar-chart [editMode]="true" [data]="test_data" *ngIf="selected_chart_type === 1"></app-bar-chart>
+  <app-line-chart *ngIf="selected_chart_type === 2"></app-line-chart>
+  <app-pie-chart *ngIf="selected_chart_type === 3"></app-pie-chart>
+  <app-scatter-plot *ngIf="selected_chart_type === 4"></app-scatter-plot>
+  <app-scatter-plot-3d *ngIf="selected_chart_type === 5"></app-scatter-plot-3d>
+  <ng-template #modalFooter>
+  </ng-template>
+</nz-modal>
+
+<ng-template #contentTemplate>
+  <ul>
+    <li *ngFor="let chart of chart_types"
+      (click)="clickMe(chart.id)">
+      {{chart.name}}
+    </li>
+  </ul>
+</ng-template>

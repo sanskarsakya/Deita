@@ -1,0 +1,58 @@
+<DOCTYPE html>
+  <html>
+
+  <head>
+    <title>Vue Demo #1: The Box App</title>
+    <meta charset='utf-8' />
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+
+  <body>
+    <h1>Vue Demo #1</h1>
+    <div id="example-2">
+      <button v-on:click="connectDatabase">Connect Database</button>
+      <button v-on:click="loadTable">Load Table</button>
+      <button v-on:click="loadDimensionMeasure">Load Dimension/ Measure</button>
+    </div>
+    <!-- Our View App goes at the end of the document -->
+    <script>
+      const { ipcRenderer: ipc } = require('electron-better-ipc');
+
+      var example2 = new Vue({
+        el: '#example-2',
+        data: {
+          name: 'Vue.js'
+        },
+        // define methods under the `methods` object
+        methods: {
+          connectDatabase: async (event) => {
+            let databaseConfig = {
+              client: 'postgres',
+              connection: {
+                host: '0.0.0.0',
+                // host: 'db',
+                port: '5432',
+                user: 'postgres',
+                password: 'postgres',
+                database: 'waqt',
+                charset: 'utf8',
+                debug: true
+              }
+            }
+            const response = await ipc.callMain('connect-database', databaseConfig);
+            console.log(response);
+          },
+          loadTable: async (event) => {
+            const response = await ipc.callMain('load-table');
+            console.log(response);
+          },
+          loadDimensionMeasure: async (event) => {
+            const response = await ipc.callMain('load-dimension-measure', 'fb_users');
+            console.log(response);
+          },
+        }
+      })
+    </script>
+  </body>
+
+  </html>

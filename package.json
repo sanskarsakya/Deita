@@ -2,19 +2,46 @@
   "name": "daita",
   "version": "1.0.0",
   "description": "this is the data visualization desktop application",
-  "main": "index.js",
+  "main": "playground/electron/main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron ."
   },
   "author": "puzansakya",
   "license": "ISC",
   "dependencies": {
+    "electron-better-ipc": "^0.4.0",
+    "electron-devtools-installer": "^3.1.1",
     "knex": "^0.21.5",
     "objection": "^2.2.3",
-    "pg": "^8.3.3"
+    "pg": "^8.3.3",
+    "sqlite3": "^5.0.0"
   },
   "devDependencies": {
+    "@types/electron-devtools-installer": "^2.2.0",
     "@types/knex": "^0.16.1",
-    "@types/pg": "^7.14.5"
+    "@types/pg": "^7.14.5",
+    "electron": "^10.1.3",
+    "electron-reloader": "^1.0.1",
+    "typescript": "^4.0.3",
+    "webpack": "^4.44.2",
+    "webpack-cli": "^3.3.12"
+  },
+  "build": {
+    "appId": "com.puzan.deita",
+    "mac": {
+      "category": "com.puzan.deita.proto"
+    },
+    "files": [
+      "migrations/**/*",
+      "seeds/**/*",
+      "build/**/*",
+      "client/**/*",
+      "node_modules/**/*",
+      "package.json"
+    ],
+    "extraFiles": [
+      "pzt.pz"
+    ]
   }
 }

@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -30,6 +31,7 @@ export const metaReducers: MetaReducer<any>[] = !environment.production
   imports: [
     BrowserModule,
     AppRoutingModule,
+    BrowserAnimationsModule,
     // NGRX MODULES
     StoreModule.forRoot(reducers, { metaReducers }),
     EffectsModule.forRoot(effects),
